@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+
+        </layout>
+    </appender>
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+    <appender name="JSON_TCP" class="net.logstash.logback.appender.SSLLogstashTcpSocketAppender">
+        <remoteHost>intake.logs.datadoghq.com</remoteHost>
+        <port>10516</port>
+        <keepAliveDuration>1 minute</keepAliveDuration>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <prefix class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>db6ba***************26 %mdc{keyThatDoesNotExist}</pattern>
+                </layout>
+              </prefix>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="JSON_TCP" />
+        <appender-ref ref="JSON" />
+    </root>
+
+</configuration>
