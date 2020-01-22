@@ -4,12 +4,12 @@ metadata:
   name: java-web-project
   annotations:
     ad.datadoghq.com/java-web-project.check_names: '["tomcat"]'
-    ad.datadoghq.com/java-web-project.init_configs: '[{}]'
+    ad.datadoghq.com/java-web-project.init_configs: '[{"is_jmx": "true", "collect_default_metrics": "true"}]'
     ad.datadoghq.com/java-web-project.instances: |
       [
         {
           "host": "%%host%%",
-          "port":"7199"
+          "port": "7199"
         }
       ]
     ad.datadoghq.com/java-web-project.logs: '[{"source":"tomcat","service":"java-web-project"}]'
